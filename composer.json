@@ -1,0 +1,76 @@
+{
+    "name": "offline-site-generator/offline-site-generator",
+    "description": "Security & Performance via static website publishing.",
+    "homepage": "https://offline-site-generator.com",
+      "license": "UNLICENSE",
+      "authors": [
+        {
+          "name": "Leon Stafford",
+          "email": "me@ljs.dev",
+          "homepage": "https://ljs.dev"
+        }
+      ],
+    "type": "wordpress-plugin",
+    "support": {
+        "issues": "https://github.com/OfflineSiteGenerator/offline-site-generator/issues",
+        "forum": "https://offline-site-generator.com/community",
+        "docs": "https://offline-site-generator.com/documentation",
+        "source": "https://github.com/OfflineSiteGenerator/offline-site-generator"
+    },
+    "require": {
+        "php": ">=7.3",
+        "wa72/url": "^0.7.1",
+        "wp-coding-standards/wpcs": "^2.3",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+        "simplehtmldom/simplehtmldom": "^2.0-RC2"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "*",
+        "thecodingmachine/phpstan-strict-rules": "*",
+        "szepeviktor/phpstan-wordpress": "*",
+        "squizlabs/php_codesniffer": "*",
+        "phpunit/phpunit": "*",
+        "phpcompatibility/php-compatibility": "*",
+        "php-parallel-lint/php-parallel-lint": "*",
+        "10up/wp_mock": "^0.4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "OfflineSiteGenerator\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PHPStan\\WordPress\\": "tests/phpstan/",
+            "OfflineSiteGenerator\\": "src/"
+        }
+    },
+    "config": {
+        "platform": {
+          "php": "7.3"
+        },
+        "preferred-install": {
+            "*": "dist"
+        },
+        "classmap-authoritative": true
+    },
+    "scripts": {
+        "phpstan": "php -d memory_limit=-1 ./vendor/bin/phpstan analyse",
+        "phpcs": "vendor/bin/phpcs --standard=./tools/phpcs.xml --ignore=*/tests/*,*/admin/*,**/coverage/*,*.js,*/vendor/*,*/views/*.php ./",
+        "phpcompat": "vendor/bin/phpcs --standard=PHPCompatibility --runtime-set testVersion 7.3 --ignore=*/tests/*,*/admin/*,**/coverage/*,*.js,*/vendor/*,*/views/*.php ./",
+        "phpcbf": "vendor/bin/phpcbf --standard=./tools/phpcs.xml --ignore=*/js/*,*/tests/*,*/admin/*,*/coverage/*,*.js,*/vendor/*,*/views/*.php ./",
+        "phpunit": "vendor/bin/phpunit ./tests/unit/",
+        "coverage": "vendor/bin/phpunit tests/unit --coverage-html coverage --whitelist src/",
+        "lint": "vendor/bin/parallel-lint --exclude vendor .",
+        "test": [
+            "composer validate --strict",
+            "@lint",
+            "@phpcs",
+            "@phpcompat",
+            "@phpstan",
+            "@phpunit"
+        ],
+        "build": "/bin/sh tools/build_release.sh",
+        "post-install-cmd": "sh ./tools/composer-post-install.sh"
+    }
+}

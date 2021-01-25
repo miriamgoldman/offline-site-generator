@@ -1,0 +1,46 @@
+{
+    "name": "thecodingmachine/phpstan-strict-rules",
+    "description": "A set of additional rules for PHPStan based on best practices followed at TheCodingMachine",
+    "type": "phpstan-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "David Négrier",
+            "email": "d.negrier@thecodingmachine.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1|^8.0",
+        "phpstan/phpstan": "^0.12"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.1",
+        "php-coveralls/php-coveralls": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "TheCodingMachine\\PHPStan\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/Rules/Exceptions/data/"
+        ],
+        "psr-4": {
+            "TheCodingMachine\\PHPStan\\": "tests/"
+        }
+    },
+    "scripts": {
+        "phpstan": "phpstan analyse src -c phpstan.neon --level=6 --no-progress -vvv"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.12-dev"
+        },
+        "phpstan": {
+            "includes": [
+                "phpstan-strict-rules.neon"
+            ]
+        }
+    }
+}
